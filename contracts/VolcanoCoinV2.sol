@@ -10,7 +10,7 @@ contract VolcanoCoinV2 is ERC20, Ownable {
         address recipient;
     }
 
-    mapping(address => Payment[]) payments;
+    mapping(address => Payment[]) public payments;
 
     event IncreaseTotalSupply(uint256 amount);
 
