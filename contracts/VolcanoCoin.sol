@@ -7,14 +7,14 @@ contract VolcanoCoin {
     mapping(address => uint) balances;
 
     struct Payment {
-        uint256 amount;
-        address to;
+        uint256 transferAmount;
+        address recipient;
     }
 
-    mapping(address => Payment) payments;
+    mapping(address => Payment[]) payments;
 
-    event increaseTotalSupply(uint256 amount);
-    event transfer(address recipient, uint256 amount);
+    event IncreaseTotalSupply(uint256 amount);
+    event Transfer(address recipient, uint256 amount);
 
     constructor() {
         owner = msg.sender;
@@ -30,9 +30,9 @@ contract VolcanoCoin {
         return totalSupply;
     }
 
-    function increasTotalSupply() public onlyOwner {
+    function increaseTotalSupply() public onlyOwner {
         totalSupply += 1000 ether;
-        emit increaseTotalSupply(totalSupply);
+        emit IncreaseTotalSupply(totalSupply);
     }
 
     function getBalanceOf(address account) public returns (uint256) {
@@ -43,6 +43,6 @@ contract VolcanoCoin {
         require(balances[msg.sender] >= amount);
         balances[msg.sender] -= amount;
         balances[receiver] += amount;
-        emit transfer(receiver, amount);
+        emit Transfer(receiver, amount);
     }
 }
